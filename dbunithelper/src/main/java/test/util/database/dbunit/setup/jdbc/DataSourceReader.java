@@ -1,4 +1,4 @@
-package test.util.database.dbunit.init.jdbc;
+package test.util.database.dbunit.setup.jdbc;
 
 public interface DataSourceReader {
 

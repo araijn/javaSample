@@ -1,18 +1,18 @@
-package test.util.database.dbunit.init;
+package test.util.database.dbunit.setup;
 
 import org.dbunit.dataset.DataSetException;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.excel.XlsDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 
-import test.util.database.dbunit.DBUnitHelperException;
-import test.util.database.dbunit.type.DBUnitTestFileType;
+import test.util.database.dbunit.helper.DBUnitHelperException;
+import test.util.database.dbunit.type.FileType;
 
 
-public class DataSetFactory {
+public class IDataSetFactory {
 
 
-	public static IDataSet createDataSet(DBUnitTestFileType type, String testDataFile) {
+	public static IDataSet createDataSet(FileType type, String testDataFile) {
 		switch(type) {
 		case XML: return createFlatXmlDataSet(testDataFile);
 		case XLS: return createXlsDataSet(testDataFile);

@@ -1,4 +1,4 @@
-package test.util.database.dbunit;
+package test.util.database.dbunit.helper;
 
 @SuppressWarnings("serial")
 public class DBUnitHelperException extends RuntimeException {

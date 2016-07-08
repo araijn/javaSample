@@ -1,4 +1,4 @@
-package test.util.database.dbunit;
+package test.util.database.dbunit.helper;
 
 import java.sql.Connection;
 
@@ -6,22 +6,14 @@ import org.dbunit.IDatabaseTester;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.operation.DatabaseOperation;
 
-import test.util.database.dbunit.init.DataSetFactory;
-import test.util.database.dbunit.init.DatabaseTesterFactory;
-import test.util.database.dbunit.type.DBUnitTestFileType;
-import test.util.database.dbunit.type.DBUnitTesterType;
-
 public abstract class AbstractDBUnitHelper implements DBUnitHelper {
 
 	protected final IDataSet dataset;
 	protected final IDatabaseTester databaseTester;
 
-	protected AbstractDBUnitHelper(DBUnitTesterType testerType, DBUnitTestFileType testFileType,
-			String testDatafile, String configFile) {
-
-		/* Testerの作成 */
-		databaseTester = DatabaseTesterFactory.createTester(testerType, configFile);
-		dataset = DataSetFactory.createDataSet(testFileType, testDatafile);
+	protected AbstractDBUnitHelper(IDatabaseTester databaseTester, IDataSet dateset) {
+		this.databaseTester = databaseTester;
+		this.dataset = dateset;
 	}
 
 	@Override

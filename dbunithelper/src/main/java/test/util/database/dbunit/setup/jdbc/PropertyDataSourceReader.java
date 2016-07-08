@@ -1,13 +1,12 @@
-package test.util.database.dbunit.init.jdbc;
+package test.util.database.dbunit.setup.jdbc;
 
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-import test.util.database.dbunit.DBUnitHelperException;
-import test.util.database.dbunit.init.DBUnitHelperInitProperty;
-import test.util.database.dbunit.init.DBUnitHelperInitProperty.PropertyKeys;
+import test.util.database.dbunit.helper.DBUnitHelperException;
+import test.util.database.dbunit.setup.jdbc.DBUnitHelperInitProperty.PropertyKeys;
 
 
 public class PropertyDataSourceReader implements DataSourceReader {

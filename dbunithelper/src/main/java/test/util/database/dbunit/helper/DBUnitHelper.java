@@ -1,4 +1,4 @@
-package test.util.database.dbunit;
+package test.util.database.dbunit.helper;
 
 import java.sql.Connection;
 

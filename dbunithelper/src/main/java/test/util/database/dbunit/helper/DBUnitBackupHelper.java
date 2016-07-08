@@ -1,4 +1,4 @@
-package test.util.database.dbunit;
+package test.util.database.dbunit.helper;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -6,14 +6,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.dbunit.IDatabaseTester;
 import org.dbunit.database.QueryDataSet;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.operation.DatabaseOperation;
-
-import test.util.database.dbunit.type.DBUnitTestFileType;
-import test.util.database.dbunit.type.DBUnitTesterType;
 
 public class DBUnitBackupHelper extends AbstractDBUnitHelper{
 
@@ -21,14 +19,14 @@ public class DBUnitBackupHelper extends AbstractDBUnitHelper{
 	private static final String BACKUP_SUFFIX = ".xml";
 
 	protected final List<String> backupTables;
-
 	protected final File backFile;
 
-	protected DBUnitBackupHelper(DBUnitTesterType testerType, DBUnitTestFileType testFileType,
-			String testDatafile, String configFile, List<String> backupTables) {
-		super(testerType, testFileType, testDatafile, configFile);
+	protected DBUnitBackupHelper(IDatabaseTester databaseTester, IDataSet testdateset, List<String> backupTables) {
+		super(databaseTester, testdateset);
 		this.backupTables = new ArrayList<String>();
-		this.backupTables.addAll(backupTables);
+		if(backupTables != null) {
+			this.backupTables.addAll(backupTables);
+		}
 
 		try {
 			/* バックアップファイルのパスを作成 */
@@ -40,6 +38,8 @@ public class DBUnitBackupHelper extends AbstractDBUnitHelper{
 
 	@Override
 	protected void beforeSetup() throws Exception {
+
+		if(backupTables.size() == 0) return;
 
 		QueryDataSet currentDataSet = new QueryDataSet(databaseTester.getConnection());
 		for(String tableName : backupTables) {
@@ -61,6 +61,8 @@ public class DBUnitBackupHelper extends AbstractDBUnitHelper{
 
 	@Override
 	protected void afterCleanUp() throws Exception {
+
+		if(backupTables.size() == 0) return;
 
 		/* バックアップした内容をリストアする */
 		FlatXmlDataSetBuilder builder = new FlatXmlDataSetBuilder();

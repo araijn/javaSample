@@ -1,9 +1,9 @@
-package test.util.database.dbunit.init;
+package test.util.database.dbunit.setup.jdbc;
 
 import java.io.IOException;
 import java.util.Properties;
 
-import test.util.database.dbunit.DBUnitHelperException;
+import test.util.database.dbunit.helper.DBUnitHelperException;
 
 public class DBUnitHelperInitProperty {
 

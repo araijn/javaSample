@@ -1,7 +1,8 @@
 package test.util.database.dbunit.type;
 
-public enum DBUnitTestFileType {
+public enum FileType {
 	XML,
 	XLS,
+	PROPERTY,
 	;
 }
