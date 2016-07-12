@@ -16,27 +16,31 @@ public class DBUnitAdvanceCleanupHelper extends AbstractDBUnitHelper {
 	}
 
 	@Override
-	protected void beforeSetup() throws Exception {}
+	protected void beforeSetup(){}
 
 	@Override
-	protected void afterSetup() throws Exception {}
+	protected void afterSetup(){}
 
 	@Override
-	protected void beforeCleanUp() throws Exception {}
+	protected void beforeCleanUp() {}
 
 	@Override
-	protected void afterCleanUp() throws Exception {
+	protected void afterCleanUp() {
 
-		if(deleteDataSet != null) {
-			databaseTester.setDataSet(deleteDataSet);
-			databaseTester.setTearDownOperation(DatabaseOperation.DELETE);
-			databaseTester.onTearDown();
-		}
+		try {
+			if(deleteDataSet != null) {
+				databaseTester.setDataSet(deleteDataSet);
+				databaseTester.setTearDownOperation(DatabaseOperation.DELETE);
+				databaseTester.onTearDown();
+			}
 
-		if(insertDataSet != null) {
-			databaseTester.setDataSet(insertDataSet);
-			databaseTester.setTearDownOperation(DatabaseOperation.INSERT);
-			databaseTester.onTearDown();
+			if(insertDataSet != null) {
+				databaseTester.setDataSet(insertDataSet);
+				databaseTester.setTearDownOperation(DatabaseOperation.INSERT);
+				databaseTester.onTearDown();
+			}
+		} catch (Exception e) {
+			throw new DBUnitHelperException(e);
 		}
 	}
 

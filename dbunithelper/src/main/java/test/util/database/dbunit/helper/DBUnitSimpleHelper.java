@@ -12,15 +12,15 @@ public class DBUnitSimpleHelper extends AbstractDBUnitHelper{
 	}
 
 	@Override
-	protected void beforeSetup() throws Exception {}
+	protected void beforeSetup(){}
 
 	@Override
-	protected void afterSetup() throws Exception {}
+	protected void afterSetup() {}
 
 	@Override
-	protected void beforeCleanUp() throws Exception {}
+	protected void beforeCleanUp(){}
 
 	@Override
-	protected void afterCleanUp() throws Exception {}
+	protected void afterCleanUp() {}
 
 }

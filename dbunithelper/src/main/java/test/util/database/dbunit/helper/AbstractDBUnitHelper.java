@@ -18,28 +18,20 @@ public abstract class AbstractDBUnitHelper implements DBUnitHelper {
 
 	@Override
 	public void setup() {
-		try {
-			beforeSetup();
+		beforeSetup();
 
-			doSetup();
+		doSetup();
 
-			afterSetup();
-		} catch (Exception e) {
-			throw new DBUnitHelperException(e);
-		}
+		afterSetup();
 	}
 
 	@Override
 	public void cleanUp() {
-		try {
-			beforeCleanUp();
+		beforeCleanUp();
 
-			doCleanUp();
+		doCleanUp();
 
-			afterCleanUp();
-		} catch (Exception e) {
-			throw new DBUnitHelperException(e);
-		}
+		afterCleanUp();
 	}
 
 	@Override
@@ -51,22 +43,30 @@ public abstract class AbstractDBUnitHelper implements DBUnitHelper {
 		}
 	}
 
-	protected void doSetup() throws Exception {
-		databaseTester.setDataSet(dataset);
-		databaseTester.setSetUpOperation(DatabaseOperation.DELETE);
-		databaseTester.onSetup();
-		databaseTester.setSetUpOperation(DatabaseOperation.INSERT);
-		databaseTester.onSetup();
+	protected void doSetup() {
+		try {
+			databaseTester.setDataSet(dataset);
+			databaseTester.setSetUpOperation(DatabaseOperation.DELETE);
+			databaseTester.onSetup();
+			databaseTester.setSetUpOperation(DatabaseOperation.INSERT);
+			databaseTester.onSetup();
+		} catch (Exception e) {
+			throw new DBUnitHelperException(e);
+		}
 	}
 
-	protected void doCleanUp() throws Exception {
-		databaseTester.setDataSet(dataset);
-		databaseTester.setTearDownOperation(DatabaseOperation.DELETE);
-		databaseTester.onTearDown();
+	protected void doCleanUp() {
+		try {
+			databaseTester.setDataSet(dataset);
+			databaseTester.setTearDownOperation(DatabaseOperation.DELETE);
+			databaseTester.onTearDown();
+		} catch (Exception e) {
+			throw new DBUnitHelperException(e);
+		}
 	}
 
-	protected abstract void beforeSetup() throws Exception;
-	protected abstract void afterSetup() throws Exception;
-	protected abstract void beforeCleanUp() throws Exception;
-	protected abstract void afterCleanUp() throws Exception;
+	protected abstract void beforeSetup()   ;
+	protected abstract void afterSetup()    ;
+	protected abstract void beforeCleanUp() ;
+	protected abstract void afterCleanUp()  ;
 }

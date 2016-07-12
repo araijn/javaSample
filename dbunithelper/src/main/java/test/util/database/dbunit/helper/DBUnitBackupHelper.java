@@ -37,40 +37,48 @@ public class DBUnitBackupHelper extends AbstractDBUnitHelper{
 	}
 
 	@Override
-	protected void beforeSetup() throws Exception {
+	protected void beforeSetup() {
 
 		if(backupTables.size() == 0) return;
 
-		QueryDataSet currentDataSet = new QueryDataSet(databaseTester.getConnection());
-		for(String tableName : backupTables) {
-			currentDataSet.addTable(tableName);
+		try {
+			QueryDataSet currentDataSet = new QueryDataSet(databaseTester.getConnection());
+			for(String tableName : backupTables) {
+				currentDataSet.addTable(tableName);
+			}
+
+			/* 指定されたテーブルをバックアップする */
+			FlatXmlDataSet.write(currentDataSet, new FileOutputStream(backFile));
+
+			/* バックアップ対象のテーブルは削除する */
+			DatabaseOperation.TRUNCATE_TABLE.execute(databaseTester.getConnection(), currentDataSet);
+
+		} catch (Exception e) {
+			throw new DBUnitHelperException(e);
+		}
+	}
+
+	@Override
+	protected void afterSetup() {}
+
+	@Override
+	protected void beforeCleanUp() {}
+
+	@Override
+	protected void afterCleanUp(){
+
+		if(backupTables.size() == 0) return;
+
+		try {
+			/* バックアップした内容をリストアする */
+			FlatXmlDataSetBuilder builder = new FlatXmlDataSetBuilder();
+			builder.setColumnSensing(true);
+			IDataSet dataSet = builder.build(backFile);
+			DatabaseOperation.CLEAN_INSERT.execute(databaseTester.getConnection(), dataSet);
+		} catch (Exception e) {
+			throw new DBUnitHelperException(e);
 		}
 
-		/* 指定されたテーブルをバックアップする */
-		FlatXmlDataSet.write(currentDataSet, new FileOutputStream(backFile));
-
-		/* バックアップ対象のテーブルは削除する */
-		DatabaseOperation.TRUNCATE_TABLE.execute(databaseTester.getConnection(), currentDataSet);
 	}
-
-	@Override
-	protected void afterSetup() throws Exception {}
-
-	@Override
-	protected void beforeCleanUp() throws Exception {}
-
-	@Override
-	protected void afterCleanUp() throws Exception {
-
-		if(backupTables.size() == 0) return;
-
-		/* バックアップした内容をリストアする */
-		FlatXmlDataSetBuilder builder = new FlatXmlDataSetBuilder();
-		builder.setColumnSensing(true);
-		IDataSet dataSet = builder.build(backFile);
-		DatabaseOperation.CLEAN_INSERT.execute(databaseTester.getConnection(), dataSet);
-
-	}
-
 
 }
